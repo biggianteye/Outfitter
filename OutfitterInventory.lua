@@ -524,7 +524,7 @@ end
 
 function Outfitter:GetNumBags()
 	if self.BankFrameIsOpen then
-		return NUM_TOTAL_EQUIPPED_BAG_SLOTS + NUM_BANKBAGSLOTS, -1
+		return NUM_TOTAL_EQUIPPED_BAG_SLOTS + C_Bank.FetchNumPurchasedBankTabs(Enum.BankType.Character), -1
 	else
 		return NUM_TOTAL_EQUIPPED_BAG_SLOTS, 0
 	end
@@ -533,7 +533,7 @@ end
 function Outfitter:GetBagList()
 	local vBagList = {}
 	if self.BankFrameIsOpen then
-		for vIndex = -1, NUM_TOTAL_EQUIPPED_BAG_SLOTS + NUM_BANKBAGSLOTS do
+		for vIndex = -1, NUM_TOTAL_EQUIPPED_BAG_SLOTS + C_Bank.FetchNumPurchasedBankTabs(Enum.BankType.Character) do
 			vBagList[vIndex] = true
 		end
 	else

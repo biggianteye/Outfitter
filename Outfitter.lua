@@ -3725,7 +3725,7 @@ end
 function Outfitter:GetEmptyBankSlotList()
 	local vEmptyBagSlots = {}
 
-	local vBagIndex = NUM_TOTAL_EQUIPPED_BAG_SLOTS + NUM_BANKBAGSLOTS
+	local vBagIndex = NUM_TOTAL_EQUIPPED_BAG_SLOTS + C_Bank.FetchNumPurchasedBankTabs(Enum.BankType.Character)
 	local vBagSlotIndex = 1
 
 	while true do
