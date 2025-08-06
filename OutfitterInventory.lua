@@ -368,27 +368,25 @@ function Outfitter._ItemInfo:GetItemInfoFromLink(itemLink)
 end
 
 function Outfitter._ItemInfo:ParseTooltip()
-	-- Grab a tooltip
-	local tooltip = Outfitter.TooltipLib:SharedTooltip()
-	tooltip:ClearLines()
+	local data
 	if self.Location and self.Location.BagIndex then
-		tooltip:SetBagItem(self.Location.BagIndex, self.Location.BagSlotIndex)
+		data = C_TooltipInfo.GetBagItem(self.Location.BagIndex, self.Location.BagSlotIndex)
 	elseif self.Location and self.Location.SlotID then
-		tooltip:SetInventoryItem("player", self.Location.SlotID)
+		data = C_TooltipInfo.GetInventoryItem("player", self.Location.SlotID)
 	elseif self.Link then
-		tooltip:SetHyperlink(self.Link)
+		data = C_TooltipInfo.GetHyperlink(self.Link)
 	else
 		assert(false, "can't find item for tooltip")
 		return
 	end
 
 	-- Return if something went wrong
-	if not tooltip:IsShown() then
+	if not data or not data.lines then
 		return
 	end
 
 	-- Iterate the lines of the tooltip
-	for line in Outfitter.TooltipLib:TooltipLines(tooltip) do
+	for _, line in ipairs(data.lines) do
 		self:ParseTooltipLine(line.leftText, line.leftColor)
 	end
 
